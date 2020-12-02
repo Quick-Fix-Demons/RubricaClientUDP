@@ -32,8 +32,8 @@ public class ClientUDP {
             
             
             String msg=null;
-            int numero;
-            int sceltacasomodifica;
+            String numero;
+            String sceltacasomodifica;
            
             Scanner sc=new Scanner(System.in);
             
@@ -43,19 +43,19 @@ public class ClientUDP {
                 System.out.println(" 0 . ricerca per nome nella tua rubrica \n 1 . ricerca per numero nella tua rubrica \n 2 . aggiungi un numero dentro la tua rubrica \n 3 . modifica un numero dentro al tua rubrica \n");
 
                 //scrivo quello che voglio fare,cioè il numero dell'operazione e il messaggio
-                numero=sc.nextInt();
+                numero=sc.nextLine();
                 
-                if(numero==2){//aggiungi numero
+                if(numero.equals("2")){//aggiungi numero
                     System.out.println("hai scelto di inserire un nuovo numero nella rubrica bene, inserisci il numero di telefono e poi il nome per salvarlo \n");
                     String numerotelefono=sc.nextLine();
-                    sc.nextLine();
+                    
                     String nomenellarubrica=sc.nextLine();
                     msg=numero+" - "+nomenellarubrica+" - "+numerotelefono;                   
                 }
-                else if(numero==3){//modifica
+                else if(numero.equals("3")){//modifica
                     System.out.println("hai scelto di modificare un contatto, ora dovrai decidere se modificare il nome del contatto oppure il numero di telefono \n");
-                    sceltacasomodifica=sc.nextInt();
-                    if(sceltacasomodifica==0){//modifica  per nome
+                    sceltacasomodifica=sc.nextLine();
+                    if(sceltacasomodifica.equals("0")){//modifica  per nome
                         System.out.println("hai scelto di modificare il nome, bene ora scrivi il vecchio nome da modificare \n");
                         String vecchionome=sc.nextLine();
                         sc.nextLine();
@@ -63,7 +63,7 @@ public class ClientUDP {
                         String nomenuovo=sc.nextLine();
                         msg=numero+" - "+sceltacasomodifica+" - "+vecchionome+" - "+nomenuovo;
                     }
-                    else if(sceltacasomodifica==1){//modifica per numero
+                    else if(sceltacasomodifica.equals("1")){//modifica per numero
                         System.out.println("hai scelto di modificare il numero di telefono, bene ora scrivi il vecchio numero di telefono da modificare \n");
                         String vecchionumero=sc.nextLine();
                         sc.nextLine();
@@ -72,15 +72,18 @@ public class ClientUDP {
                         msg=numero+" - "+sceltacasomodifica+" - "+vecchionumero+" - "+nuovonumero;
                     }
                 }
-                else if(numero==0){//ricerca per nome
+                else if(numero.equals("0")){//ricerca per nome
                    System.out.println("hai scelto di ricercare nella tua rubrica per nome, scrivi il nome di chi vuoi ricercare \n");
                    String nomedacercare=sc.nextLine();
                    msg=numero+" - "+nomedacercare;
                 }
-                else if(numero==1){//ricerca per numero di telefono
+                else if(numero.equals("1")){//ricerca per numero di telefono
                    System.out.println("hai scelto di ricercare nella tua rubrica per numero di telefono, scrivi il numero di telefono di chi vuoi ricercare \n");
                    String numeroditelefono=sc.nextLine();
                    msg=numero+" - "+numeroditelefono;
+                }
+                else if(numero.equals("4")) {
+                    msg = numero;
                 }
                     
 
@@ -89,13 +92,14 @@ public class ClientUDP {
             
                 //connessione al server
                 //invio i dati dalla socket
-                DatagramPacket request = new DatagramPacket(buffer,buffer.length , address, port);
+                DatagramPacket request = new DatagramPacket(buffer, buffer.length, address, port);
                 socket.send(request);
                 
                 //creo l'array per ricevere i dati nella socket
                 byte[] ricevirisposta = new byte[1024];
                 DatagramPacket response = new DatagramPacket(ricevirisposta, ricevirisposta.length);
                 socket.receive(response); //ricevo il messaggio
+                System.out.println(new String(response.getData()));
                 //messaggio che vado a prendere dal server (che ricevo)
                 //msg = new String(response.getData());
                 
