@@ -14,7 +14,7 @@ import java.util.Scanner;
 
 /**
  *
- * @author Utente
+ * @author Quick Fix Demons
  */
 public class ClientUDP {
 
@@ -22,7 +22,6 @@ public class ClientUDP {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
         int port = 1051;
         try {
             //creazione di tutti i parametri che mi servono
