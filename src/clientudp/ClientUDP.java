@@ -45,12 +45,22 @@ public class ClientUDP {
                 //scrivo quello che voglio fare,cioè il numero dell'operazione e il messaggio
                 numero=sc.nextLine();
                 
-                if(numero.equals("2")){//aggiungi numero
+                if(numero.equals("0")){//ricerca per nome
+                   System.out.println("hai scelto di ricercare nella tua rubrica per nome, scrivi il nome di chi vuoi ricercare \n");
+                   String nomedacercare=sc.nextLine();
+                   msg=numero+" - "+nomedacercare;
+                }
+                else if(numero.equals("1")){//ricerca per numero di telefono
+                   System.out.println("hai scelto di ricercare nella tua rubrica per numero di telefono, scrivi il numero di telefono di chi vuoi ricercare \n");
+                   String numeroditelefono=sc.nextLine();
+                   msg=numero+" - "+numeroditelefono;
+                }
+                else if(numero.equals("2")){//aggiungi numero
                     System.out.println("hai scelto di inserire un nuovo numero nella rubrica bene, inserisci il numero di telefono e poi il nome per salvarlo \n");
                     String numerotelefono=sc.nextLine();
                     
                     String nomenellarubrica=sc.nextLine();
-                    msg=numero+" - "+nomenellarubrica+" - "+numerotelefono;                   
+                    msg=numero+" - "+nomenellarubrica+" - "+numerotelefono;
                 }
                 else if(numero.equals("3")){//modifica
                     System.out.println("hai scelto di modificare un contatto, ora dovrai decidere se modificare il nome del contatto oppure il numero di telefono \n");
@@ -72,24 +82,12 @@ public class ClientUDP {
                         msg=numero+" - "+sceltacasomodifica+" - "+vecchionumero+" - "+nuovonumero;
                     }
                 }
-                else if(numero.equals("0")){//ricerca per nome
-                   System.out.println("hai scelto di ricercare nella tua rubrica per nome, scrivi il nome di chi vuoi ricercare \n");
-                   String nomedacercare=sc.nextLine();
-                   msg=numero+" - "+nomedacercare;
-                }
-                else if(numero.equals("1")){//ricerca per numero di telefono
-                   System.out.println("hai scelto di ricercare nella tua rubrica per numero di telefono, scrivi il numero di telefono di chi vuoi ricercare \n");
-                   String numeroditelefono=sc.nextLine();
-                   msg=numero+" - "+numeroditelefono;
-                }
                 else if(numero.equals("4")) {
                     msg = numero;
                 }
-                    
-
+                
                 buffer=msg.getBytes();//metto dentro il messaggio che ho costruito in tutti gli if
-            
-            
+                
                 //connessione al server
                 //invio i dati dalla socket
                 DatagramPacket request = new DatagramPacket(buffer, buffer.length, address, port);
@@ -100,13 +98,6 @@ public class ClientUDP {
                 DatagramPacket response = new DatagramPacket(ricevirisposta, ricevirisposta.length);
                 socket.receive(response); //ricevo il messaggio
                 System.out.println(new String(response.getData()));
-                //messaggio che vado a prendere dal server (che ricevo)
-                //msg = new String(response.getData());
-                
-                
-                //System.out.println(msg);
-                
-                
                 
             }
  
